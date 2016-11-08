@@ -31,7 +31,7 @@ public class GoogleMapsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
 
-        View mapFragmentContainer = inflater.inflate(R.layout.fragment_maps_container, container, false);
+        View mapFragmentContainer = inflater.inflate(R.layout.fragment_maps, container, false);
 
         return mapFragmentContainer;
     }
