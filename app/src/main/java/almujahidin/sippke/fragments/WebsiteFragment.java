@@ -23,7 +23,6 @@ import java.util.HashMap;
 
 import almujahidin.sippke.MainActivity;
 import almujahidin.sippke.R;
-import almujahidin.sippke.model.VehicleDataModel;
 
 /**
  * Created by mtakin on 08/11/16.
@@ -33,12 +32,11 @@ public class WebsiteFragment extends Fragment implements CompoundButton.OnChecke
 
     private Switch vehiclePower;
     private Button engineStarter;
+    /*
     private CompoundButton.OnCheckedChangeListener mSwitchListener;
     private View.OnClickListener mButtonListener;
-
+*/
     private boolean vehiclePowerSwitchIsClicked = false;
-
-    private static final String DB_REFERENCE = "DR3559KE";
     private DatabaseReference firebaseDbRef;
 
     private TextView engineStatus;
@@ -55,25 +53,6 @@ public class WebsiteFragment extends Fragment implements CompoundButton.OnChecke
         theFragment.setArguments(args);
 
         return theFragment;
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-
-        if ( context instanceof CompoundButton.OnCheckedChangeListener && context instanceof View.OnClickListener) {
-            mSwitchListener = (CompoundButton.OnCheckedChangeListener) context;
-            mButtonListener = (View.OnClickListener) context;
-        } else {
-            throw new RuntimeException(context.toString() + " Must Implement OnCheckedChangeListener and OnClickListsner");
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mSwitchListener = null;
-        mButtonListener = null;
     }
 
     @Nullable
@@ -97,26 +76,24 @@ public class WebsiteFragment extends Fragment implements CompoundButton.OnChecke
 
         vehiclePower(vehiclePower.isChecked());
 
+        engineStarter.setEnabled(false);
         return fragment;
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        firebaseDbRef = FirebaseDatabase.getInstance().getReference(DB_REFERENCE);
+        firebaseDbRef = FirebaseDatabase.getInstance().getReference(MainActivity.DB_REFERENCE);
         firebaseDbRef.addValueEventListener(this);
     }
 
     @Override
     public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-
         switch (compoundButton.getId()) {
             case R.id.vehiclePowerSwitchWeb:
                 vehiclePower(isChecked);
                 break;
         }
-
-        mSwitchListener.onCheckedChanged(compoundButton, isChecked);
     }
 
     private void vehiclePower(boolean isPoweredUp) {
@@ -152,27 +129,40 @@ public class WebsiteFragment extends Fragment implements CompoundButton.OnChecke
 
         if( ping.equals("online") ) {
             vehicleStatus.setText(R.string.vehicle_status_online);
+            vehicleStatus.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
         } else {
             vehicleStatus.setText(R.string.vehicle_status_offline);
+            engineStatus.setTextColor(getResources().getColor(R.color.colorGrey));
         }
 
         if(power.equals("off")) {
             powerStatus.setText(R.string.vehicle_status_off);
+            powerStatus.setTextColor(getResources().getColor(R.color.colorGrey));
             vehiclePower.setChecked(false);
+            engineStarter.setEnabled(false);
         } else {
             powerStatus.setText(R.string.vehicle_status_on);
+            powerStatus.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
             vehiclePower.setChecked(true);
+            engineStarter.setEnabled(true);
         }
 
         if( engine.equals("on") ) {
             engineStatus.setText(R.string.vehicle_status_on);
+            engineStatus.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
             engineStarter.setEnabled(false);
         } else if ( engine.equals("ignite") ) {
             engineStatus.setText(R.string.vehicle_engine_status_ignite);
+            engineStatus.setTextColor(getResources().getColor(R.color.colorYellow));
             engineStarter.setEnabled(false);
         } else {
             engineStatus.setText(R.string.vehicle_status_off);
-            engineStarter.setEnabled(true);
+            engineStatus.setTextColor(getResources().getColor(R.color.colorGrey));
+            if( vehiclePower.isChecked() ) {
+                engineStarter.setEnabled(true);
+            } else {
+                engineStarter.setEnabled(false);
+            }
         }
 
     }

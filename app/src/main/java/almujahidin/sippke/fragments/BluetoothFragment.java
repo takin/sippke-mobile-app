@@ -1,6 +1,5 @@
 package almujahidin.sippke.fragments;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -12,10 +11,7 @@ import android.widget.Switch;
 
 import almujahidin.sippke.R;
 
-public class BluetoothFragment extends Fragment implements CompoundButton.OnCheckedChangeListener{
-
-    private View.OnClickListener mClickListener;
-    private CompoundButton.OnCheckedChangeListener mSwitchListener;
+public class BluetoothFragment extends Fragment implements CompoundButton.OnCheckedChangeListener, View.OnClickListener {
 
     private Switch smartModeSwitch;
     private Switch vehiclePowerSwitch;
@@ -48,29 +44,9 @@ public class BluetoothFragment extends Fragment implements CompoundButton.OnChec
         smartModeSwitch.setOnCheckedChangeListener(this);
         vehiclePowerSwitch.setOnCheckedChangeListener(this);
 
-        vehicleEngineStarter.setOnClickListener(mClickListener);
+        vehicleEngineStarter.setOnClickListener(this);
 
         return view;
-    }
-
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof View.OnClickListener && context instanceof CompoundButton.OnCheckedChangeListener) {
-            mClickListener = (View.OnClickListener) context;
-            mSwitchListener = (CompoundButton.OnCheckedChangeListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnListFragmentInteractionListener, OnClickListener and OnCheckedChangeListener");
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mClickListener = null;
-        mSwitchListener = null;
     }
 
     @Override
@@ -88,9 +64,6 @@ public class BluetoothFragment extends Fragment implements CompoundButton.OnChec
                 }
                 break;
         }
-
-        // this is the cascading listener to the activity
-        mSwitchListener.onCheckedChanged(compoundButton, isChecked);
     }
 
     private void smartMode(boolean isEnabled) {
@@ -107,5 +80,10 @@ public class BluetoothFragment extends Fragment implements CompoundButton.OnChec
                 vehicleEngineStarter.setEnabled(false);
             }
         }
+    }
+
+    @Override
+    public void onClick(View view) {
+
     }
 }

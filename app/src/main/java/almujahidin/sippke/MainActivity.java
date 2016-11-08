@@ -1,6 +1,5 @@
 package almujahidin.sippke;
 
-import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -10,20 +9,18 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-
-import android.widget.CompoundButton;
 
 import almujahidin.sippke.fragments.BluetoothFragment;
 import almujahidin.sippke.fragments.GoogleMapsFragment;
 import almujahidin.sippke.fragments.WebsiteFragment;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
+public class MainActivity extends AppCompatActivity {
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
+
+    public static final String DB_REFERENCE = "DR3559KE";
 
     public static final String FRAGMENT_TITLE = "fragment_title";
 
@@ -49,7 +46,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
-
     }
 
     @Override
@@ -74,37 +70,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.vehicleEngineStarterButtonWeb:
-                Log.d("button", "engine is started from web");
-                break;
-            case R.id.vehicleEngineStarterButtonBluetooth:
-                Log.d("button", "engine is started from bluetooth");
-                break;
-        }
-    }
-
-    @Override
-    public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-        switch (compoundButton.getId()) {
-            case R.id.smartModeSwitch:
-                if ( isChecked ) {
-                    Log.d("switch", "smart mode is enabled");
-                } else {
-                    Log.d("switch", "smart mode is disabled");
-                }
-                break;
-            case R.id.vehiclePowerSwitchBluetooth:
-                Log.d("switch", "vehicle is powered up from bluetooth");
-                break;
-            case R.id.vehiclePowerSwitchWeb:
-                Log.d("switch", "vehicle is powered up from web");
-                break;
-        }
-    }
-
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
         public SectionsPagerAdapter(FragmentManager fm) {
@@ -127,7 +92,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     theFragment = GoogleMapsFragment.newInstance();
                     break;
             }
-
             return theFragment;
         }
 
@@ -150,5 +114,4 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             return null;
         }
     }
-
 }

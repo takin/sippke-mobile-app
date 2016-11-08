@@ -17,19 +17,24 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import almujahidin.sippke.MainActivity;
-import almujahidin.sippke.OnVehicleMoveListener;
 import almujahidin.sippke.R;
 
 /**
  * Created by mtakin on 08/11/16.
  */
 
-public class GoogleMapsFragment extends Fragment implements OnMapReadyCallback {
+public class GoogleMapsFragment extends Fragment implements OnMapReadyCallback, ValueEventListener {
 
     private MapView mapView;
     private GoogleMap googleMap;
+    private DatabaseReference mFirebaseDbRef;
 
     public static GoogleMapsFragment newInstance() {
 
@@ -48,14 +53,17 @@ public class GoogleMapsFragment extends Fragment implements OnMapReadyCallback {
 
         View mapFragmentContainer = inflater.inflate(R.layout.fragment_maps, container, false);
         mapView = (MapView) mapFragmentContainer.findViewById(R.id.mapView);
-
         mapView.onCreate(savedInstanceState);
-
         mapView.onResume();
-
         mapView.getMapAsync(this);
 
         return mapFragmentContainer;
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        mFirebaseDbRef = FirebaseDatabase.getInstance().getReference(MainActivity.DB_REFERENCE);
     }
 
     @Override
@@ -96,15 +104,21 @@ public class GoogleMapsFragment extends Fragment implements OnMapReadyCallback {
             // for ActivityCompat#requestPermissions for more details.
             return;
         }
+
         googleMap.setMyLocationEnabled(true);
-
         LatLng latlng = new LatLng(-34,151);
-
         googleMap.addMarker(new MarkerOptions().position(latlng).title("Sydney").snippet("Testing"));
-
         CameraPosition cameraPosition = new CameraPosition.Builder().target(latlng).tilt(45).zoom(14).build();
-
         googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
     }
 
+    @Override
+    public void onDataChange(DataSnapshot dataSnapshot) {
+
+    }
+
+    @Override
+    public void onCancelled(DatabaseError databaseError) {
+
+    }
 }
