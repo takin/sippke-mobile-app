@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,8 +15,10 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -34,7 +37,9 @@ public class GoogleMapsFragment extends Fragment implements OnMapReadyCallback, 
 
     private MapView mapView;
     private GoogleMap googleMap;
-    private DatabaseReference mFirebaseDbRef;
+    private Marker vehiclePositionMarker;
+
+    private DatabaseReference mFirebasePosition;
 
     public static GoogleMapsFragment newInstance() {
 
@@ -63,12 +68,14 @@ public class GoogleMapsFragment extends Fragment implements OnMapReadyCallback, 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mFirebaseDbRef = FirebaseDatabase.getInstance().getReference(MainActivity.DB_REFERENCE);
+        mFirebasePosition = FirebaseDatabase.getInstance().getReference(MainActivity.DB_REFERENCE).child("position");
+        mFirebasePosition.addValueEventListener(this);
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        mFirebasePosition.addListenerForSingleValueEvent(this);
         mapView.onResume();
     }
 
@@ -106,19 +113,38 @@ public class GoogleMapsFragment extends Fragment implements OnMapReadyCallback, 
         }
 
         googleMap.setMyLocationEnabled(true);
-        LatLng latlng = new LatLng(-34,151);
-        googleMap.addMarker(new MarkerOptions().position(latlng).title("Sydney").snippet("Testing"));
-        CameraPosition cameraPosition = new CameraPosition.Builder().target(latlng).tilt(45).zoom(14).build();
-        googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+        if( vehiclePositionMarker == null ) {
+            createMarker();
+        }
     }
 
     @Override
     public void onDataChange(DataSnapshot dataSnapshot) {
 
+        Log.d("firebase", dataSnapshot.toString());
+
+        double latitude = (double) dataSnapshot.child("latitude").getValue();
+        double longitude = (double) dataSnapshot.child("longitude").getValue();
+
+        LatLng latlng = new LatLng(latitude,longitude);
+
+        if( vehiclePositionMarker == null ) {
+            createMarker();
+        }
+        vehiclePositionMarker.setPosition(latlng);
+
+        CameraPosition cameraPosition = new CameraPosition.Builder().target(latlng).tilt(75).zoom(17).build();
+
+        googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
     }
 
     @Override
     public void onCancelled(DatabaseError databaseError) {
 
+    }
+
+    private void createMarker() {
+        MarkerOptions markerOptions = new MarkerOptions().position(new LatLng(0,0)).title("DK489DF").snippet("Lokasi Terakhir").icon(BitmapDescriptorFactory.fromResource(R.drawable.vehicle_64));
+        vehiclePositionMarker = googleMap.addMarker(markerOptions);
     }
 }

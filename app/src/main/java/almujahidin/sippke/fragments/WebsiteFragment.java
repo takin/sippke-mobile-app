@@ -1,10 +1,8 @@
 package almujahidin.sippke.fragments;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,11 +30,7 @@ public class WebsiteFragment extends Fragment implements CompoundButton.OnChecke
 
     private Switch vehiclePower;
     private Button engineStarter;
-    /*
-    private CompoundButton.OnCheckedChangeListener mSwitchListener;
-    private View.OnClickListener mButtonListener;
-*/
-    private boolean vehiclePowerSwitchIsClicked = false;
+
     private DatabaseReference firebaseDbRef;
 
     private TextView engineStatus;
@@ -81,11 +75,12 @@ public class WebsiteFragment extends Fragment implements CompoundButton.OnChecke
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         firebaseDbRef = FirebaseDatabase.getInstance().getReference(MainActivity.DB_REFERENCE);
         firebaseDbRef.addValueEventListener(this);
     }
+
 
     @Override
     public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
@@ -99,25 +94,19 @@ public class WebsiteFragment extends Fragment implements CompoundButton.OnChecke
     private void vehiclePower(boolean isPoweredUp) {
 
         if( isPoweredUp ) {
-            if( vehiclePowerSwitchIsClicked ) {
                 HashMap<String,Object> powerChild = new HashMap<>();
                 powerChild.put("power","on");
                 firebaseDbRef.updateChildren(powerChild);
-            }
             engineStarter.setEnabled(true);
         } else {
-            if( vehiclePowerSwitchIsClicked ) {
                 HashMap<String,Object> powerChild = new HashMap<>();
                 HashMap<String,Object> engineChild = new HashMap<>();
                 powerChild.put("power","off");
                 engineChild.put("engine","off");
                 firebaseDbRef.updateChildren(powerChild);
                 firebaseDbRef.updateChildren(engineChild);
-            }
             engineStarter.setEnabled(false);
         }
-
-        vehiclePowerSwitchIsClicked = false;
     }
 
     @Override
@@ -176,7 +165,7 @@ public class WebsiteFragment extends Fragment implements CompoundButton.OnChecke
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.vehiclePowerSwitchWeb:
-                vehiclePowerSwitchIsClicked = true;
+                vehiclePower(vehiclePower.isChecked());
                 break;
             case R.id.vehicleEngineStarterButtonWeb:
                 HashMap<String,Object> engineChild = new HashMap<>();
