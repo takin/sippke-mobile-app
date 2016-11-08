@@ -104,30 +104,20 @@
         android:layout_marginTop="20dp"
         android:paddingTop="@dimen/button_vertical_spacer"
         android:paddingBottom="@dimen/button_vertical_spacer"
-        android:text="@string/switch_smart_mode"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/smartModeSwitch"
-        android:textStyle="normal|bold" />
-
-    <Switch
-        android:enabled="false"
-        android:paddingTop="@dimen/button_vertical_spacer"
-        android:paddingBottom="@dimen/button_vertical_spacer"
         android:text="@string/switch_vehicle_power"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/vehiclePowerSwitchBluetooth"
+        android:id="@+id/vehiclePowerSwitchWeb"
         android:textStyle="normal|bold" />
 
     <Button
+        android:layout_marginTop="15dp"
         android:enabled="false"
         style="@style/Widget.AppCompat.Button"
         android:paddingTop="@dimen/button_vertical_spacer"
         android:paddingBottom="@dimen/button_vertical_spacer"
         android:text="@string/button_vehicle_starter"
-        android:layout_marginTop="15dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/vehicleEngineStarterButtonBluetooth" />
+        android:id="@+id/vehicleEngineStarterButtonWeb" />
 </LinearLayout>

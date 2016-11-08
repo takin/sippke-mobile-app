@@ -5,8 +5,16 @@
     <string name="button_vehicle_starter">Engine Starter</string>
     <string name="switch_smart_mode">Smart Mode</string>
     <string name="vehicle_status">Vehicle Status</string>
+    <string name="vehicle_power_status">Power Status</string>
+    <string name="vehicle_engine_status">Engine Status</string>
+    <string name="vehicle_status_on">ON</string>
+    <string name="vehicle_status_off">OFF</string>
     <string name="vehicle_status_connected">Connected</string>
     <string name="vehicle_status_disconnected">Disconnected</string>
+    <string name="vehicle_status_online">Online</string>
+    <string name="vehicle_status_offline">Offline</string>
 
-    <dimen name="vertical_spacer">10dp</dimen>
+    <dimen name="message_vertical_spacer">4dp</dimen>
+    <dimen name="button_vertical_spacer">20dp</dimen>
+    <dimen name="status_margin">30dp</dimen>
 </resources>

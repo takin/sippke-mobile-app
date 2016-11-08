@@ -9,20 +9,20 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import android.widget.TextView;
+import android.widget.CompoundButton;
 
 import almujahidin.sippke.fragments.BluetoothFragment;
 import almujahidin.sippke.fragments.GoogleMapsFragment;
 import almujahidin.sippke.fragments.WebsiteFragment;
-import almujahidin.sippke.fragments.dummy.DummyContent;
 
-public class MainActivity extends AppCompatActivity implements BluetoothFragment.OnListFragmentInteractionListener{
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
 
@@ -98,8 +98,34 @@ public class MainActivity extends AppCompatActivity implements BluetoothFragment
     }
 
     @Override
-    public void onListFragmentInteraction(DummyContent.DummyItem item) {
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.vehicleEngineStarterButtonWeb:
+                Log.d("button", "engine is started from web");
+                break;
+            case R.id.vehicleEngineStarterButtonBluetooth:
+                Log.d("button", "engine is started from bluetooth");
+                break;
+        }
+    }
 
+    @Override
+    public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+        switch (compoundButton.getId()) {
+            case R.id.smartModeSwitch:
+                if ( isChecked ) {
+                    Log.d("switch", "smart mode is enabled");
+                } else {
+                    Log.d("switch", "smart mode is disabled");
+                }
+                break;
+            case R.id.vehiclePowerSwitchBluetooth:
+                Log.d("switch", "vehicle is powered up from bluetooth");
+                break;
+            case R.id.vehiclePowerSwitchWeb:
+                Log.d("switch", "vehicle is powered up from web");
+                break;
+        }
     }
 
     /**
@@ -152,7 +178,7 @@ public class MainActivity extends AppCompatActivity implements BluetoothFragment
             Fragment theFragment = null;
             switch(position){
                 case 0 :
-                    theFragment = BluetoothFragment.newInstance(1);
+                    theFragment = BluetoothFragment.newInstance();
                     break;
                 case 1:
                     theFragment = WebsiteFragment.newInstance();
