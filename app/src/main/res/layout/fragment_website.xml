@@ -21,16 +21,8 @@
             android:layout_width="100dp" />
 
         <TextView
-            android:textColor="@color/colorPrimaryDark"
-            android:id="@+id/vehicle_status_connected"
-            android:text="@string/vehicle_status_connected"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textStyle="normal|bold" />
-        <TextView
-            android:visibility="gone"
-            android:id="@+id/vehicle_status_disconnected"
-            android:text="@string/vehicle_status_disconnected"
+            android:id="@+id/vehicle_status"
+            android:text="@string/vehicle_status_offline"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textStyle="normal|bold" />
@@ -53,15 +45,7 @@
             android:textStyle="normal|bold" />
 
         <TextView
-            android:textColor="@color/colorPrimaryDark"
-            android:id="@+id/vehicle_engine_status_on"
-            android:text="@string/vehicle_status_on"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textStyle="normal|bold" />
-        <TextView
-            android:visibility="gone"
-            android:id="@+id/vehicle_engine_status_off"
+            android:id="@+id/vehicle_engine_status"
             android:text="@string/vehicle_status_off"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -85,15 +69,7 @@
             android:textStyle="normal|bold" />
 
         <TextView
-            android:textColor="@color/colorPrimaryDark"
-            android:id="@+id/vehicle_power_status_on"
-            android:text="@string/vehicle_status_on"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textStyle="normal|bold" />
-        <TextView
-            android:visibility="gone"
-            android:id="@+id/vehicle_power_status_off"
+            android:id="@+id/vehicle_power_status"
             android:text="@string/vehicle_status_off"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

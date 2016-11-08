@@ -1,0 +1,86 @@
+{
+  "project_info": {
+    "project_number": "20591176622",
+    "firebase_url": "https://vehicle-iot.firebaseio.com",
+    "project_id": "vehicle-iot",
+    "storage_bucket": "vehicle-iot.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:20591176622:android:8c904bfb0c2cb6f5",
+        "android_client_info": {
+          "package_name": "com.sippke"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "20591176622-m9ug18o105rbqpnes3p2ta5uvonlmuhk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.sippke",
+            "certificate_hash": "A689E4C2434BE7E18D1533D048948C4058E7F8F0"
+          }
+        },
+        {
+          "client_id": "20591176622-tnvv9cakeaeapge7lc9b9gud185e765i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDBYblwYWkbYxS5uA88p6uPvY_szkHnnm8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "20591176622-tnvv9cakeaeapge7lc9b9gud185e765i.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:20591176622:android:8e2df1bbc8936595",
+        "android_client_info": {
+          "package_name": "almujahidin.sippke"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "20591176622-tnvv9cakeaeapge7lc9b9gud185e765i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDBYblwYWkbYxS5uA88p6uPvY_szkHnnm8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

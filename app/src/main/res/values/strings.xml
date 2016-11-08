@@ -9,10 +9,13 @@
     <string name="vehicle_engine_status">Engine Status</string>
     <string name="vehicle_status_on">ON</string>
     <string name="vehicle_status_off">OFF</string>
+    <string name="vehicle_engine_status_ignite">IGNITING</string>
     <string name="vehicle_status_connected">Connected</string>
     <string name="vehicle_status_disconnected">Disconnected</string>
     <string name="vehicle_status_online">Online</string>
     <string name="vehicle_status_offline">Offline</string>
+
+    <string name="google_maps_key">AIzaSyAh3BsuMRON28D_eBPb_Yp4YfgpSzCpnyg</string>
 
     <dimen name="message_vertical_spacer">4dp</dimen>
     <dimen name="button_vertical_spacer">20dp</dimen>
