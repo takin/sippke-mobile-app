@@ -68,8 +68,6 @@ public class WebsiteFragment extends Fragment implements CompoundButton.OnChecke
         vehiclePower.setOnCheckedChangeListener(this);
         engineStarter.setOnClickListener(this);
 
-        vehiclePower(vehiclePower.isChecked());
-
         engineStarter.setEnabled(false);
         return fragment;
     }

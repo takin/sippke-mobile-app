@@ -108,4 +108,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/vehicleEngineStarterButtonBluetooth" />
+
+    <Button
+        android:text="Find Vehicle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/findVehicle" />
 </LinearLayout>
