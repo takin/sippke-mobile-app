@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/SiPPKe-tabbed.iml" filepath="$PROJECT_DIR$/SiPPKe-tabbed.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SiPPKe.iml" filepath="$PROJECT_DIR$/SiPPKe.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

@@ -80,6 +80,7 @@
     </LinearLayout>
 
     <Switch
+        android:visibility="gone"
         android:layout_marginTop="20dp"
         android:paddingTop="@dimen/button_vertical_spacer"
         android:paddingBottom="@dimen/button_vertical_spacer"
@@ -90,6 +91,7 @@
         android:textStyle="normal|bold" />
 
     <Button
+        android:visibility="gone"
         android:layout_marginTop="15dp"
         android:enabled="false"
         style="@style/Widget.AppCompat.Button"
@@ -99,4 +101,28 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/vehicleEngineStarterButtonWeb" />
+
+    <TextView
+        android:id="@+id/webLoadingText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp"
+        android:text="Menghubungi Kendaraan..."
+        android:textAlignment="center" />
+
+    <ProgressBar
+        android:id="@+id/webLoadingBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginEnd="20dp"
+        android:indeterminate="true"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp" />
+
 </LinearLayout>

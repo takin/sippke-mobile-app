@@ -68,14 +68,14 @@ public class GoogleMapsFragment extends Fragment implements OnMapReadyCallback, 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mFirebasePosition = FirebaseDatabase.getInstance().getReference(MainActivity.DB_REFERENCE).child("position");
-        mFirebasePosition.addValueEventListener(this);
+//        mFirebasePosition = FirebaseDatabase.getInstance().getReference(MainActivity.DB_REFERENCE).child("position");
+//        mFirebasePosition.addValueEventListener(this);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        mFirebasePosition.addListenerForSingleValueEvent(this);
+//        mFirebasePosition.addListenerForSingleValueEvent(this);
         mapView.onResume();
     }
 
