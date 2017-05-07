@@ -14,4 +14,5 @@ public interface FirebaseDatabaseListener {
     public void onPower(String powerStatus);
     public void onPing(String response);
     public void onEngine(String engineStatus);
+    public void onPositionChange(DataSnapshot position);
 }

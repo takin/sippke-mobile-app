@@ -18,6 +18,7 @@ import com.google.android.gms.vision.text.Text;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -30,7 +31,7 @@ import almujahidin.sippke.R;
  * Created by mtakin on 08/11/16.
  */
 
-public class InternetFragment extends Fragment implements CompoundButton.OnCheckedChangeListener, View.OnClickListener, FirebaseDatabaseListener {
+public class InternetFragment extends RootFragment implements View.OnClickListener, ValueEventListener {
 
     public static final  String TAG = "InternetFragment";
 
@@ -44,34 +45,24 @@ public class InternetFragment extends Fragment implements CompoundButton.OnCheck
     private TextView webLoadingText;
     private ProgressBar webLoadingBar;
 
-    private InternetButtonActionListener buttonActionListener;
-
-    public InternetFragment(){}
+    public InternetFragment(){
+        super();
+    }
 
     public static InternetFragment newInstance() {
 
         InternetFragment theFragment = new InternetFragment();
         Bundle args = new Bundle();
-        args.putString(MainActivity.FRAGMENT_TITLE, "webFragment");
+        args.putString(MainActivity.FRAGMENT_TITLE, TAG);
         theFragment.setArguments(args);
 
         return theFragment;
     }
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        Log.i(MainActivity.TAG, "view destroyed");
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        try {
-            buttonActionListener = (InternetButtonActionListener) getActivity();
-        } catch (Exception e) {
-            Log.e(TAG, "Activity must implements InternetButtonActionListener Interface");
-        }
+    public void onStart() {
+        super.onStart();
+        super.pingVehicle();
     }
 
     @Nullable
@@ -79,14 +70,10 @@ public class InternetFragment extends Fragment implements CompoundButton.OnCheck
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
 
-        Log.i(MainActivity.TAG,"Bundle is -> " + savedInstanceState);
-
         View fragment = inflater.inflate(R.layout.fragment_website, container, false);
 
         vehiclePower = (Switch) fragment.findViewById(R.id.vehiclePowerSwitchWeb);
         engineStarter = (Button) fragment.findViewById(R.id.vehicleEngineStarterButtonWeb);
-
-        vehiclePower.setOnClickListener(this);
 
         vehicleStatus = (TextView) fragment.findViewById(R.id.vehicle_status);
         powerStatus = (TextView) fragment.findViewById(R.id.vehicle_power_status);
@@ -95,117 +82,30 @@ public class InternetFragment extends Fragment implements CompoundButton.OnCheck
         webLoadingText = (TextView) fragment.findViewById(R.id.webLoadingText);
         webLoadingBar = (ProgressBar) fragment.findViewById(R.id.webLoadingBar);
 
-        vehiclePower.setOnCheckedChangeListener(this);
-        engineStarter.setOnClickListener(this);
-
         engineStarter.setEnabled(false);
+
+        engineStarter.setOnClickListener(this);
+        vehiclePower.setOnClickListener(this);
+
+        super.firebaseDatabseRef.addValueEventListener(this);
 
         return fragment;
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        buttonActionListener.pingVehicle();
-    }
-
-    @Override
-    public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-        switch (compoundButton.getId()) {
-            case R.id.vehiclePowerSwitchWeb:
-//                String status = isChecked ? "on" : "off";
-//                buttonActionListener.onPowerStateChange(status);
-                break;
-        }
-    }
-/*
-    private void vehiclePower(boolean isPoweredUp) {
-
-        if( isPoweredUp ) {
-            HashMap<String,Object> powerChild = new HashMap<>();
-            powerChild.put("power","on");
-            firebaseDbRef.updateChildren(powerChild);
-            engineStarter.setEnabled(true);
-        } else {
-            HashMap<String,Object> powerChild = new HashMap<>();
-            HashMap<String,Object> engineChild = new HashMap<>();
-            powerChild.put("power","off");
-            engineChild.put("engine","off");
-            firebaseDbRef.updateChildren(powerChild);
-            firebaseDbRef.updateChildren(engineChild);
-            engineStarter.setEnabled(false);
-        }
-    }
-
-
-    @Override
-    public void onDataChange(DataSnapshot dataSnapshot) {
-
-        String power = dataSnapshot.child("power").getValue().toString();
-        String ping = dataSnapshot.child("ping").getValue().toString();
-        String engine = dataSnapshot.child("engine").getValue().toString();
-
-        if( ping.equals("online") ) {
-            vehicleStatus.setText(R.string.vehicle_status_online);
-            vehicleStatus.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
-        } else {
-            vehicleStatus.setText(R.string.vehicle_status_offline);
-            engineStatus.setTextColor(getResources().getColor(R.color.colorGrey));
-        }
-
-        if(power.equals("off")) {
-            powerStatus.setText(R.string.vehicle_status_off);
-            powerStatus.setTextColor(getResources().getColor(R.color.colorGrey));
-            vehiclePower.setChecked(false);
-            engineStarter.setEnabled(false);
-        } else {
-            powerStatus.setText(R.string.vehicle_status_on);
-            powerStatus.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
-            vehiclePower.setChecked(true);
-            engineStarter.setEnabled(true);
-        }
-
-        if( engine.equals("on") ) {
-            engineStatus.setText(R.string.vehicle_status_on);
-            engineStatus.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
-            engineStarter.setEnabled(false);
-        } else if ( engine.equals("ignite") ) {
-            engineStatus.setText(R.string.vehicle_engine_status_ignite);
-            engineStatus.setTextColor(getResources().getColor(R.color.colorYellow));
-            engineStarter.setEnabled(false);
-        } else {
-            engineStatus.setText(R.string.vehicle_status_off);
-            engineStatus.setTextColor(getResources().getColor(R.color.colorGrey));
-            if( vehiclePower.isChecked() ) {
-                engineStarter.setEnabled(true);
-            } else {
-                engineStarter.setEnabled(false);
-            }
-        }
-
-    }
-    */
-
-    @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.vehiclePowerSwitchWeb:
-                String status = vehiclePower.isChecked() ? "on" : "off";
-                buttonActionListener.onPowerStateChange(status);
+                String newState = vehiclePower.isChecked() ? "on" : "off";
+                super.changePowerState(newState);
                 break;
             case R.id.vehicleEngineStarterButtonWeb:
-                buttonActionListener.igniteEngine();
+                super.igniteEngine();
                 engineStarter.setEnabled(false);
                 break;
         }
     }
 
-    @Override
     public void onPower(String powerText) {
         if( powerStatus != null){
             if( powerText.equalsIgnoreCase("off") ) {
@@ -222,24 +122,21 @@ public class InternetFragment extends Fragment implements CompoundButton.OnCheck
         }
     }
 
-    @Override
+
     public void onPing(String response) {
 
         if( vehicleStatus != null )
         {
             if( response.equalsIgnoreCase("online") ) {
-                setLoadingVisibility(false);
                 vehicleStatus.setText(R.string.vehicle_status_online);
                 vehicleStatus.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
             } else {
-                setLoadingVisibility(true);
                 vehicleStatus.setText(R.string.vehicle_status_offline);
                 engineStatus.setTextColor(getResources().getColor(R.color.colorGrey));
             }
         }
     }
 
-    @Override
     public void onEngine(String engine) {
 
         if( engineStatus != null )
@@ -260,7 +157,8 @@ public class InternetFragment extends Fragment implements CompoundButton.OnCheck
                 default:
                     engineStatus.setText(R.string.vehicle_status_off);
                     engineStatus.setTextColor(getResources().getColor(R.color.colorGrey));
-                    if( vehiclePower.isChecked() ) {
+
+                    if( engineStatus.getText().toString().equalsIgnoreCase("off") ) {
                         engineStarter.setEnabled(true);
                     } else {
                         engineStarter.setEnabled(false);
@@ -286,9 +184,21 @@ public class InternetFragment extends Fragment implements CompoundButton.OnCheck
         }
     }
 
-    public interface InternetButtonActionListener {
-        public void onPowerStateChange(String state);
-        public void igniteEngine();
-        public void pingVehicle();
+    @Override
+    public void onDataChange(DataSnapshot dataSnapshot) {
+        String engine = dataSnapshot.child("engine").getValue().toString();
+        String power = dataSnapshot.child("power").getValue().toString();
+        String ping = dataSnapshot.child("ping").getValue().toString();
+        setLoadingVisibility(false);
+        if(getActivity() != null) {
+            onPower(power);
+            onEngine(engine);
+            onPing(ping);
+        }
+    }
+
+    @Override
+    public void onCancelled(DatabaseError databaseError) {
+
     }
 }

@@ -1,6 +1,7 @@
 package almujahidin.sippke.fragments;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -23,9 +24,11 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.Serializable;
+
+import almujahidin.sippke.FirebaseDatabaseListener;
 import almujahidin.sippke.MainActivity;
 import almujahidin.sippke.R;
 
@@ -33,19 +36,18 @@ import almujahidin.sippke.R;
  * Created by mtakin on 08/11/16.
  */
 
-public class GoogleMapsFragment extends Fragment implements OnMapReadyCallback, ValueEventListener {
+public class GoogleMapsFragment extends RootFragment implements OnMapReadyCallback, ValueEventListener {
 
+    public static final String TAG = "GoogleMapFragment";
     private MapView mapView;
     private GoogleMap googleMap;
     private Marker vehiclePositionMarker;
-
-    private DatabaseReference mFirebasePosition;
 
     public static GoogleMapsFragment newInstance() {
 
         GoogleMapsFragment theFragment = new GoogleMapsFragment();
         Bundle args = new Bundle();
-        args.putString(MainActivity.FRAGMENT_TITLE, "Google Maps Fragment");
+        args.putString(MainActivity.FRAGMENT_TITLE, TAG);
         theFragment.setArguments(args);
 
         return theFragment;
@@ -62,21 +64,27 @@ public class GoogleMapsFragment extends Fragment implements OnMapReadyCallback, 
         mapView.onResume();
         mapView.getMapAsync(this);
 
-        return mapFragmentContainer;
-    }
+        super.firebaseDatabseRef.addValueEventListener(this);
 
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-//        mFirebasePosition = FirebaseDatabase.getInstance().getReference(MainActivity.DB_REFERENCE).child("position");
-//        mFirebasePosition.addValueEventListener(this);
+        return mapFragmentContainer;
     }
 
     @Override
     public void onResume() {
         super.onResume();
-//        mFirebasePosition.addListenerForSingleValueEvent(this);
         mapView.onResume();
+        super.getLastPosition(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot position) {
+                processPositionData(position);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
     }
 
     @Override
@@ -118,33 +126,42 @@ public class GoogleMapsFragment extends Fragment implements OnMapReadyCallback, 
         }
     }
 
+    private void createMarker() {
+        MarkerOptions markerOptions = new MarkerOptions().position(new LatLng(0, 0)).title("DK489DF").snippet("Lokasi Terakhir").icon(BitmapDescriptorFactory.fromResource(R.drawable.vehicle_64));
+        if(googleMap != null) {
+            vehiclePositionMarker = googleMap.addMarker(markerOptions);
+        }
+    }
+
     @Override
     public void onDataChange(DataSnapshot dataSnapshot) {
+        DataSnapshot position = dataSnapshot.child("position");
+        processPositionData(position);
+    }
 
-        Log.d("firebase", dataSnapshot.toString());
-
-        double latitude = (double) dataSnapshot.child("latitude").getValue();
-        double longitude = (double) dataSnapshot.child("longitude").getValue();
+    private void processPositionData(DataSnapshot position){
+        double latitude = (double) position.child("latitude").getValue();
+        double longitude = (double) position.child("longitude").getValue();
 
         LatLng latlng = new LatLng(latitude,longitude);
 
         if( vehiclePositionMarker == null ) {
             createMarker();
+        } else {
+            setMarker(latlng);
         }
+    }
+
+    private void setMarker(LatLng latlng) {
         vehiclePositionMarker.setPosition(latlng);
-
         CameraPosition cameraPosition = new CameraPosition.Builder().target(latlng).tilt(75).zoom(17).build();
-
-        googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+        if( googleMap != null ) {
+            googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+        }
     }
 
     @Override
     public void onCancelled(DatabaseError databaseError) {
 
-    }
-
-    private void createMarker() {
-        MarkerOptions markerOptions = new MarkerOptions().position(new LatLng(0,0)).title("DK489DF").snippet("Lokasi Terakhir").icon(BitmapDescriptorFactory.fromResource(R.drawable.vehicle_64));
-        vehiclePositionMarker = googleMap.addMarker(markerOptions);
     }
 }

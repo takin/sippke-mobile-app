@@ -67,11 +67,9 @@ public class BluetoothFragment extends Fragment implements CompoundButton.OnChec
         return fragment;
     }
 
-
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
+    public void onStart() {
+        super.onStart();
         final BluetoothManager bluetoothManager = (BluetoothManager) getActivity().getSystemService(Context.BLUETOOTH_SERVICE);
         mBluetoothAdapter = bluetoothManager.getAdapter();
 
@@ -146,6 +144,12 @@ public class BluetoothFragment extends Fragment implements CompoundButton.OnChec
                 }
             }
         };
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
     }
 
     @Override

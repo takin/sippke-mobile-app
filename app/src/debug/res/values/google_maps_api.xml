@@ -8,14 +8,16 @@
 
     You can also add your credentials to an existing key, using this line:
     A6:89:E4:C2:43:4B:E7:E1:8D:15:33:D0:48:94:8C:40:58:E7:F8:F0;almujahidin.sippke
-
     Alternatively, follow the directions here:
     https://developers.google.com/maps/documentation/android/start#get-key
 
     Once you have your key (it starts with "AIza"), replace the "google_maps_key"
     string in this file.
     -->
-    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">
+    <string name="google_maps_key_restricted" templateMergeStrategy="preserve" translatable="false">
         AIzaSyAh3BsuMRON28D_eBPb_Yp4YfgpSzCpnyg
+    </string>
+    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">
+        AIzaSyAaFxvxCHl15jR9wWE55myqhvLufPSd7dI
     </string>
 </resources>
