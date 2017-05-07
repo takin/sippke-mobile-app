@@ -9,6 +9,7 @@
     <string name="vehicle_engine_status">Engine Status</string>
     <string name="vehicle_status_on">ON</string>
     <string name="vehicle_status_off">OFF</string>
+    <string name="vehicle_status_ping">Asking...</string>
     <string name="vehicle_engine_status_ignite">IGNITING</string>
     <string name="vehicle_status_connected">Connected</string>
     <string name="vehicle_status_disconnected">Disconnected</string>

@@ -21,7 +21,7 @@
             android:layout_width="100dp" />
 
         <TextView
-            android:textColor="@color/colorGrey"
+            android:textColor="@color/colorRed"
             android:id="@+id/vehicle_status"
             android:text="@string/vehicle_status_offline"
             android:layout_width="wrap_content"
@@ -46,7 +46,7 @@
             android:textStyle="normal|bold" />
 
         <TextView
-            android:textColor="@color/colorGrey"
+            android:textColor="@color/colorRed"
             android:id="@+id/vehicle_engine_status"
             android:text="@string/vehicle_status_off"
             android:layout_width="wrap_content"
@@ -71,7 +71,7 @@
             android:textStyle="normal|bold" />
 
         <TextView
-            android:textColor="@color/colorGrey"
+            android:textColor="@color/colorRed"
             android:id="@+id/vehicle_power_status"
             android:text="@string/vehicle_status_off"
             android:layout_width="wrap_content"

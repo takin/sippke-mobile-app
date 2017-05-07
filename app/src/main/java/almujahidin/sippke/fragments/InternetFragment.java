@@ -62,6 +62,7 @@ public class InternetFragment extends RootFragment implements View.OnClickListen
     @Override
     public void onStart() {
         super.onStart();
+        setLoadingVisibility(true);
         super.pingVehicle();
     }
 
@@ -101,7 +102,6 @@ public class InternetFragment extends RootFragment implements View.OnClickListen
                 break;
             case R.id.vehicleEngineStarterButtonWeb:
                 super.igniteEngine();
-                engineStarter.setEnabled(false);
                 break;
         }
     }
@@ -110,7 +110,7 @@ public class InternetFragment extends RootFragment implements View.OnClickListen
         if( powerStatus != null){
             if( powerText.equalsIgnoreCase("off") ) {
                 powerStatus.setText(R.string.vehicle_status_off);
-                powerStatus.setTextColor(getResources().getColor(R.color.colorGrey));
+                powerStatus.setTextColor(getResources().getColor(R.color.colorRed));
                 vehiclePower.setChecked(false);
                 engineStarter.setEnabled(false);
             } else {
@@ -127,12 +127,23 @@ public class InternetFragment extends RootFragment implements View.OnClickListen
 
         if( vehicleStatus != null )
         {
-            if( response.equalsIgnoreCase("online") ) {
-                vehicleStatus.setText(R.string.vehicle_status_online);
-                vehicleStatus.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
-            } else {
-                vehicleStatus.setText(R.string.vehicle_status_offline);
-                engineStatus.setTextColor(getResources().getColor(R.color.colorGrey));
+            switch (response)
+            {
+                case "online":
+                    vehicleStatus.setText(R.string.vehicle_status_online);
+                    vehicleStatus.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+                    setLoadingVisibility(false);
+                    break;
+                case "offline":
+                    vehicleStatus.setText(R.string.vehicle_status_offline);
+                    engineStatus.setTextColor(getResources().getColor(R.color.colorRed));
+                    setLoadingVisibility(false);
+                    break;
+                default:
+                    vehicleStatus.setText(R.string.vehicle_status_ping);
+                    engineStatus.setTextColor(getResources().getColor(R.color.colorGrey));
+                    setLoadingVisibility(true);
+                    break;
             }
         }
     }
@@ -156,9 +167,9 @@ public class InternetFragment extends RootFragment implements View.OnClickListen
                     break;
                 default:
                     engineStatus.setText(R.string.vehicle_status_off);
-                    engineStatus.setTextColor(getResources().getColor(R.color.colorGrey));
+                    engineStatus.setTextColor(getResources().getColor(R.color.colorRed));
 
-                    if( engineStatus.getText().toString().equalsIgnoreCase("off") ) {
+                    if( powerStatus.getText().toString().equalsIgnoreCase("on") ) {
                         engineStarter.setEnabled(true);
                     } else {
                         engineStarter.setEnabled(false);
@@ -189,7 +200,7 @@ public class InternetFragment extends RootFragment implements View.OnClickListen
         String engine = dataSnapshot.child("engine").getValue().toString();
         String power = dataSnapshot.child("power").getValue().toString();
         String ping = dataSnapshot.child("ping").getValue().toString();
-        setLoadingVisibility(false);
+
         if(getActivity() != null) {
             onPower(power);
             onEngine(engine);
