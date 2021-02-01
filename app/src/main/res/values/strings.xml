@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">SiPPKe</string>
+    <string name="action_settings">Settings</string>
+    <string name="switch_vehicle_power">Vehicle Power</string>
+    <string name="button_vehicle_starter">Engine Starter</string>
+    <string name="button_vehicle_horn">Horn</string>
+    <string name="switch_smart_mode">Smart Mode</string>
+    <string name="vehicle_status">Vehicle Status</string>
+    <string name="vehicle_power_status">Power Status</string>
+    <string name="vehicle_engine_status">Engine Status</string>
+    <string name="vehicle_status_on">ON</string>
+    <string name="vehicle_status_off">OFF</string>
+    <string name="vehicle_status_ping">Asking...</string>
+    <string name="vehicle_engine_status_ignite">IGNITING</string>
+    <string name="vehicle_status_connected">Connected</string>
+    <string name="vehicle_status_disconnected">Disconnected</string>
+    <string name="vehicle_status_connecting">Connecting</string>
+    <string name="vehicle_status_disconnecting">Disconnecting</string>
+    <string name="vehicle_status_online">Online</string>
+    <string name="vehicle_status_offline">Offline</string>
+
+    <string name="google_maps_key">AIzaSyAh3BsuMRON28D_eBPb_Yp4YfgpSzCpnyg</string>
+
+    <dimen name="message_vertical_spacer">4dp</dimen>
+    <dimen name="button_vertical_spacer">20dp</dimen>
+    <dimen name="status_margin">30dp</dimen>
+</resources>

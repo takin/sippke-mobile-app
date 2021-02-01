@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:padding="10dp"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/message_vertical_spacer"
+        android:paddingTop="@dimen/message_vertical_spacer">
+        <TextView
+            android:textColor="@color/colorAccent"
+            android:layout_marginEnd="@dimen/status_margin"
+            android:layout_marginRight="@dimen/status_margin"
+            android:text="@string/vehicle_status"
+            android:layout_height="wrap_content"
+            android:textStyle="normal|bold"
+            android:layout_width="100dp" />
+
+        <TextView
+            android:textColor="@color/colorRed"
+            android:id="@+id/vehicle_status"
+            android:text="@string/vehicle_status_offline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="normal|bold" />
+    </LinearLayout>
+
+    <!-- Vehicle Engine status -->
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/message_vertical_spacer"
+        android:paddingTop="@dimen/message_vertical_spacer">
+        <TextView
+            android:textColor="@color/colorAccent"
+            android:layout_marginEnd="@dimen/status_margin"
+            android:layout_marginRight="@dimen/status_margin"
+            android:layout_width="100dp"
+            android:text="@string/vehicle_engine_status"
+            android:layout_height="wrap_content"
+            android:textStyle="normal|bold" />
+
+        <TextView
+            android:textColor="@color/colorRed"
+            android:id="@+id/vehicle_engine_status"
+            android:text="@string/vehicle_status_off"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="normal|bold" />
+    </LinearLayout>
+
+    <!-- Vehicle Power status -->
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/message_vertical_spacer"
+        android:paddingTop="@dimen/message_vertical_spacer">
+        <TextView
+            android:textColor="@color/colorAccent"
+            android:layout_marginEnd="@dimen/status_margin"
+            android:layout_marginRight="@dimen/status_margin"
+            android:layout_width="100dp"
+            android:text="@string/vehicle_power_status"
+            android:layout_height="wrap_content"
+            android:textStyle="normal|bold" />
+
+        <TextView
+            android:textColor="@color/colorRed"
+            android:id="@+id/vehicle_power_status"
+            android:text="@string/vehicle_status_off"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="normal|bold" />
+    </LinearLayout>
+
+    <Switch
+        android:visibility="gone"
+        android:layout_marginTop="20dp"
+        android:paddingTop="@dimen/button_vertical_spacer"
+        android:paddingBottom="@dimen/button_vertical_spacer"
+        android:text="@string/switch_vehicle_power"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/vehiclePowerSwitchWeb"
+        android:textStyle="normal|bold" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
+        <Button
+            android:visibility="visible"
+            android:layout_marginTop="15dp"
+            android:enabled="false"
+            style="@style/Base.Widget.AppCompat.Button.Borderless.Colored"
+            android:background="@color/colorPrimaryDark"
+            android:textColor="@color/common_google_signin_btn_text_dark_default"
+            android:paddingTop="30dp"
+            android:paddingBottom="30dp"
+            android:layout_weight="0.5"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
+            android:text="@string/button_vehicle_starter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/vehicleEngineStarterButtonWeb" />
+        <Button
+            android:visibility="visible"
+            android:layout_weight="1.5"
+            android:layout_marginTop="15dp"
+            android:enabled="false"
+            android:background="@color/colorAccent"
+            android:textColor="@color/common_google_signin_btn_text_dark_default"
+            style="@style/Widget.AppCompat.Button.Borderless.Colored"
+            android:paddingTop="30dp"
+            android:paddingBottom="30dp"
+            android:text="@string/button_vehicle_horn"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/hornButtonWeb" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/webLoadingText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp"
+        android:text="Menghubungi Kendaraan..."
+        android:textAlignment="center" />
+
+    <ProgressBar
+        android:id="@+id/webLoadingBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginEnd="20dp"
+        android:indeterminate="true"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp" />
+
+</LinearLayout>
