@@ -36,6 +36,7 @@ public class RootFragment extends Fragment {
     private static Map<String,Object> FirebasePowerChild = new HashMap<>(1);
     private static Map<String,Object> FirebaseEngineChild = new HashMap<>(1);
     private static Map<String,Object> FirebasePingChild = new HashMap<>(1);
+    private static Map<String,Object> FirebaseHornChild = new HashMap<>(1);
 
     public RootFragment() {}
 
@@ -60,6 +61,11 @@ public class RootFragment extends Fragment {
     protected void pingVehicle(){
         FirebasePingChild.put("ping","ask");
         firebaseDatabseRef.updateChildren(FirebasePingChild);
+    }
+
+    protected void setHorn(String state) {
+        FirebaseHornChild.put("horn",state);
+        firebaseDatabseRef.updateChildren(FirebaseHornChild);
     }
 
     protected void getLastPosition(ValueEventListener listener){

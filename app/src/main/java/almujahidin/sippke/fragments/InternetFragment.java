@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -31,12 +32,12 @@ import almujahidin.sippke.R;
  * Created by mtakin on 08/11/16.
  */
 
-public class InternetFragment extends RootFragment implements View.OnClickListener, ValueEventListener {
+public class InternetFragment extends RootFragment implements View.OnClickListener, ValueEventListener, View.OnTouchListener {
 
     public static final  String TAG = "InternetFragment";
 
     private Switch vehiclePower;
-    private Button engineStarter;
+    private Button engineStarter,hornButtonWeb;
 
     private TextView engineStatus;
     private TextView powerStatus;
@@ -75,6 +76,7 @@ public class InternetFragment extends RootFragment implements View.OnClickListen
 
         vehiclePower = (Switch) fragment.findViewById(R.id.vehiclePowerSwitchWeb);
         engineStarter = (Button) fragment.findViewById(R.id.vehicleEngineStarterButtonWeb);
+        hornButtonWeb = (Button) fragment.findViewById(R.id.hornButtonWeb);
 
         vehicleStatus = (TextView) fragment.findViewById(R.id.vehicle_status);
         powerStatus = (TextView) fragment.findViewById(R.id.vehicle_power_status);
@@ -85,6 +87,7 @@ public class InternetFragment extends RootFragment implements View.OnClickListen
 
         engineStarter.setEnabled(false);
 
+        hornButtonWeb.setOnTouchListener(this);
         engineStarter.setOnClickListener(this);
         vehiclePower.setOnClickListener(this);
 
@@ -113,11 +116,13 @@ public class InternetFragment extends RootFragment implements View.OnClickListen
                 powerStatus.setTextColor(getResources().getColor(R.color.colorRed));
                 vehiclePower.setChecked(false);
                 engineStarter.setEnabled(false);
+                hornButtonWeb.setEnabled(false);
             } else {
                 powerStatus.setText(R.string.vehicle_status_on);
                 powerStatus.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
                 vehiclePower.setChecked(true);
                 engineStarter.setEnabled(true);
+                hornButtonWeb.setEnabled(true);
             }
         }
     }
@@ -169,11 +174,9 @@ public class InternetFragment extends RootFragment implements View.OnClickListen
                     engineStatus.setText(R.string.vehicle_status_off);
                     engineStatus.setTextColor(getResources().getColor(R.color.colorRed));
 
-                    if( powerStatus.getText().toString().equalsIgnoreCase("on") ) {
-                        engineStarter.setEnabled(true);
-                    } else {
-                        engineStarter.setEnabled(false);
-                    }
+                    boolean newState = ( powerStatus.getText().toString().equalsIgnoreCase("on") );
+                    engineStarter.setEnabled(newState);
+
                     break;
             }
         }
@@ -187,11 +190,13 @@ public class InternetFragment extends RootFragment implements View.OnClickListen
             vehiclePower.setVisibility(View.GONE);
             webLoadingBar.setVisibility(View.VISIBLE);
             webLoadingText.setVisibility(View.VISIBLE);
+            hornButtonWeb.setVisibility(View.GONE);
         } else {
             engineStarter.setVisibility(View.VISIBLE);
             vehiclePower.setVisibility(View.VISIBLE);
             webLoadingText.setVisibility(View.GONE);
             webLoadingBar.setVisibility(View.GONE);
+            hornButtonWeb.setVisibility(View.VISIBLE);
         }
     }
 
@@ -211,5 +216,15 @@ public class InternetFragment extends RootFragment implements View.OnClickListen
     @Override
     public void onCancelled(DatabaseError databaseError) {
 
+    }
+
+    @Override
+    public boolean onTouch(View view, MotionEvent motionEvent) {
+        if ( view.getId() == R.id.hornButtonWeb)
+        {
+            String hornState = ( motionEvent.getAction() == MotionEvent.ACTION_DOWN  ) ? "on" : "off";
+            super.setHorn(hornState);
+        }
+        return false;
     }
 }

@@ -90,17 +90,43 @@
         android:id="@+id/vehiclePowerSwitchWeb"
         android:textStyle="normal|bold" />
 
-    <Button
-        android:visibility="gone"
-        android:layout_marginTop="15dp"
-        android:enabled="false"
-        style="@style/Widget.AppCompat.Button"
-        android:paddingTop="@dimen/button_vertical_spacer"
-        android:paddingBottom="@dimen/button_vertical_spacer"
-        android:text="@string/button_vehicle_starter"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/vehicleEngineStarterButtonWeb" />
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
+        <Button
+            android:visibility="visible"
+            android:layout_marginTop="15dp"
+            android:enabled="false"
+            style="@style/Base.Widget.AppCompat.Button.Borderless.Colored"
+            android:background="@color/colorPrimaryDark"
+            android:textColor="@color/common_google_signin_btn_text_dark_default"
+            android:paddingTop="30dp"
+            android:paddingBottom="30dp"
+            android:layout_weight="0.5"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
+            android:text="@string/button_vehicle_starter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/vehicleEngineStarterButtonWeb" />
+        <Button
+            android:visibility="visible"
+            android:layout_weight="1.5"
+            android:layout_marginTop="15dp"
+            android:enabled="false"
+            android:background="@color/colorAccent"
+            android:textColor="@color/common_google_signin_btn_text_dark_default"
+            style="@style/Widget.AppCompat.Button.Borderless.Colored"
+            android:paddingTop="30dp"
+            android:paddingBottom="30dp"
+            android:text="@string/button_vehicle_horn"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/hornButtonWeb" />
+    </LinearLayout>
 
     <TextView
         android:id="@+id/webLoadingText"

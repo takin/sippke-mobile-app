@@ -3,6 +3,7 @@
     <string name="action_settings">Settings</string>
     <string name="switch_vehicle_power">Vehicle Power</string>
     <string name="button_vehicle_starter">Engine Starter</string>
+    <string name="button_vehicle_horn">Horn</string>
     <string name="switch_smart_mode">Smart Mode</string>
     <string name="vehicle_status">Vehicle Status</string>
     <string name="vehicle_power_status">Power Status</string>
@@ -23,7 +24,4 @@
     <dimen name="message_vertical_spacer">4dp</dimen>
     <dimen name="button_vertical_spacer">20dp</dimen>
     <dimen name="status_margin">30dp</dimen>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
